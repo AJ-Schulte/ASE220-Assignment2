@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>Pet Shelter - Home</title>
+        <link rel="stylesheet" href="css/mdb.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="js/mdb.es.min.js"></script>
+    </head>
+    <body>
+        <!--Main Navigation-->
+        <header>
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <!-- Toggle button -->
+                <button
+                data-mdb-collapse-init
+                class="navbar-toggler"
+                type="button"
+                data-mdb-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                >
+                <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Left links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                </ul>
+                </div>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+                    <div id="pet1" class="card">
+                        <img src="imgs/bella.jpg" class="card-img-top" alt="Bella - Labrador"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Bella <i class="fa fa-venus"></i> - 3 year old Dog</h5>
+                            <p class="card-text">A playful and friendly Labrador who loves swimming and playing fetch.</p>
+                            <a id="bella" href="detail.html?name=bella" class="btn btn-primary" data-mdb-ripple-init>Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div id="pet2" class="card">
+                        <img src="imgs/max.jpg" class="card-img-top" alt="Max - German Shepherd"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Max <i class="fa fa-mars"></i> - 5 year old Dog</h5>
+                            <p class="card-text">A loyal and protective German Shepherd, great at obedience training.</p>
+                            <a id="max" href="detail.html?name=max" class="btn btn-primary" data-mdb-ripple-init>details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card">
+                        <img src="imgs/whiskers.jpg" class="card-img-top" alt="Whiskers - Maine Coon"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Whiskers <i class="fa fa-mars"></i> - 2 year old Cat</h5>
+                            <p class="card-text">A fluffy and affectionate Maine Coon who enjoys climbing and exploring.</p>
+                            <a id="whiskers" href="detail.html?name=whiskers" class="btn btn-primary" data-mdb-ripple-init>Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+                    <div class="card">
+                        <img src="imgs/coco.jpg" class="card-img-top" alt="Fissure in Sandstone"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Coco <i class="fa fa-venus"></i> - 4 year old Cat</h5>
+                            <p class="card-text">A calm and affectionate British Shorthair who loves sunbathing by the window.</p>
+                            <a id="coco" href="detail.html?name=coco" class="btn btn-primary" data-mdb-ripple-init>Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card">
+                        <img src="imgs/rocky.jpg" class="card-img-top" alt="Fissure in Sandstone"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Rocky <i class="fa fa-mars"></i> - 4 year old Dog</h5>
+                            <p class="card-text">A laid-back Bulldog who enjoys lounging around and getting belly rubs.</p>
+                            <a id="rocky" href="detail.html?name=rocky" class="btn btn-primary" data-mdb-ripple-init>Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card">
+                        <img src="imgs/luna.jpg" class="card-img-top" alt="Fissure in Sandstone"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Luna <i class="fa fa-venus"></i> - 1 year old Cat</h5>
+                            <p class="card-text">A curious and energetic Siamese cat known for her loud meows and playful antics.</p>
+                            <a id="luna" href="detail.html?name=luna" class="btn btn-primary" data-mdb-ripple-init>Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            import { Ripple, initMDB } from "mdb-ui-kit";
+            initMDB({ Ripple });
+        </script>
+        <script>
+            document.getElementById("a").onclick = function(e){
+                e.preventDefault();
+                window.open(this.href+"?fruit=apple", '_blank');
+            }
+        </script>
+    </body>
+</html>
