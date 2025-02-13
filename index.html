@@ -3,7 +3,20 @@
         <title>Pet Shelter - Home</title>
         <link rel="stylesheet" href="css/mdb.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/main.css">
         <script src="js/mdb.es.min.js"></script>
+        <script src="js/database.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+        integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
+        crossorigin="anonymous"
+        ></script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
+        crossorigin="anonymous"
+        ></script>
     </head>
     <body>
         <!--Main Navigation-->
@@ -33,83 +46,220 @@
                 </ul>
                 </div>
         </header>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <div id="pet1" class="card">
-                        <img src="imgs/bella.jpg" class="card-img-top" alt="Bella - Labrador"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Bella <i class="fa fa-venus"></i> - 3 year old Dog</h5>
-                            <p class="card-text">A playful and friendly Labrador who loves swimming and playing fetch.</p>
-                            <a id="bella" href="detail.html?name=bella" class="btn btn-primary" data-mdb-ripple-init>Details</a>
-                        </div>
+        <section class="adoption-section">
+            <div class="container">
+                <h2 class="section-title">Adopt a Pet</h2>
+                <p class="section-subtitle">Give these loving animals a forever home.</p>
+                <div class="container">
+                    <div class="row" id="pet-grid">
+                        
                     </div>
                 </div>
-                <div class="col-md">
-                    <div id="pet2" class="card">
-                        <img src="imgs/max.jpg" class="card-img-top" alt="Max - German Shepherd"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Max <i class="fa fa-mars"></i> - 5 year old Dog</h5>
-                            <p class="card-text">A loyal and protective German Shepherd, great at obedience training.</p>
-                            <a id="max" href="detail.html?name=max" class="btn btn-primary" data-mdb-ripple-init>details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="card">
-                        <img src="imgs/whiskers.jpg" class="card-img-top" alt="Whiskers - Maine Coon"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Whiskers <i class="fa fa-mars"></i> - 2 year old Cat</h5>
-                            <p class="card-text">A fluffy and affectionate Maine Coon who enjoys climbing and exploring.</p>
-                            <a id="whiskers" href="detail.html?name=whiskers" class="btn btn-primary" data-mdb-ripple-init>Details</a>
-                        </div>
+                <div class="container">
+                    <div id="loadMoreBtnContainer">
+
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <div class="card">
-                        <img src="imgs/coco.jpg" class="card-img-top" alt="Fissure in Sandstone"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Coco <i class="fa fa-venus"></i> - 4 year old Cat</h5>
-                            <p class="card-text">A calm and affectionate British Shorthair who loves sunbathing by the window.</p>
-                            <a id="coco" href="detail.html?name=coco" class="btn btn-primary" data-mdb-ripple-init>Details</a>
+        </section>
+
+        <!-- Modal Main -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <ul class="list-group">
+                                    <li class="list-group-item" id="IDNum">ID - </li>
+                                    <li class="list-group-item" id="Name">Name - <i id="gender" class=""></i></li>
+                                    <li class="list-group-item" id="breed">Breed - </li>
+                                    <li class="list-group-item" id="age">Age - </li>
+                                    <li class="list-group-item" id="Neutered">Neutered - </li>
+                                    <li class="list-group-item" id="chipped">Microchipped - </li>
+                                    <li class="list-group-item" id="chipID">ChipID - </li>
+                                    <li class="list-group-item" id="health">Health Status - </li>
+                                    <li class="list-group-item" id="vaccine">Vaccinated - </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 ms-auto">
+                                <img id="fullImg" style="max-width: 100%; max-height: 100%;" class="img-fluid rounded" src="" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md">
-                    <div class="card">
-                        <img src="imgs/rocky.jpg" class="card-img-top" alt="Fissure in Sandstone"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Rocky <i class="fa fa-mars"></i> - 4 year old Dog</h5>
-                            <p class="card-text">A laid-back Bulldog who enjoys lounging around and getting belly rubs.</p>
-                            <a id="rocky" href="detail.html?name=rocky" class="btn btn-primary" data-mdb-ripple-init>Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="card">
-                        <img src="imgs/luna.jpg" class="card-img-top" alt="Fissure in Sandstone"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Luna <i class="fa fa-venus"></i> - 1 year old Cat</h5>
-                            <p class="card-text">A curious and energetic Siamese cat known for her loud meows and playful antics.</p>
-                            <a id="luna" href="detail.html?name=luna" class="btn btn-primary" data-mdb-ripple-init>Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <script>
             import { Ripple, initMDB } from "mdb-ui-kit";
             initMDB({ Ripple });
         </script>
         <script>
-            document.getElementById("a").onclick = function(e){
-                e.preventDefault();
-                window.open(this.href+"?fruit=apple", '_blank');
+            let currentIndex = 0; // Ensure this is defined
+            const petsPerPage = 9;
+            const petGrid = document.getElementById("pet-grid");
+        
+            document.addEventListener("DOMContentLoaded", () => {
+                loadPets();
+                const createPetBtn = document.createElement("button");
+                createPetBtn.textContent = "Create Pet";
+                createPetBtn.classList.add("btn", "btn-success", "mb-3");
+                createPetBtn.setAttribute("data-bs-toggle", "modal");
+                createPetBtn.setAttribute("data-bs-target", "#createPetModal");
+                document.querySelector(".section-subtitle").insertAdjacentHTML('afterend', `
+                    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#createPetModal">Create Pet</button>
+                `);
+                const loadMoreBtn = document.createElement("button");
+                loadMoreBtn.textContent = "Load More";
+                loadMoreBtn.id = "loadMoreBtn";
+                loadMoreBtn.classList.add("btn", "btn-primary", "load-more");
+                loadMoreBtn.addEventListener("click", loadPets);
+                document.querySelector("#loadMoreBtnContainer").appendChild(loadMoreBtn);
+            });
+        
+            function loadPets() {
+                let petsToShow = petShelterData.slice(currentIndex, currentIndex + petsPerPage);
+        
+                petsToShow.forEach(pet => {
+                    let petCard = document.createElement("div");
+                    petCard.classList.add("col-md-4", "mb-4"); // 3 per row in Bootstrap
+        
+                    petCard.innerHTML = `
+                        <div class="card shadow">
+                            <img src="imgs/${pet.name}.jpg" class="card-img-top" alt="${pet.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${pet.name}</h5>
+                                <p class="card-text">${pet.age} years old • ${pet.breed}</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="openModal('${pet.id}')">Details</button>
+                                <button class="btn btn-primary" onclick="deletePet('${pet.id}')">Delete</button>
+                            </div>
+                        </div>
+                    `;
+        
+                    petGrid.appendChild(petCard);
+                });
+        
+                currentIndex += petsToShow.length;
+                if (currentIndex >= petShelterData.length) {
+                    document.getElementById("loadMoreBtn").style.display = "none";
+                }
             }
-        </script>
+
+            function deletePet(petId) {
+                // Find the pet index in the data array
+                const petIndex = petShelterData.findIndex(p => p.id === petId.toString());
+
+                if (petIndex !== -1) {
+                    // Remove the pet from the array
+                    petShelterData.splice(petIndex, 1);
+
+                    // Reset index and clear the pet grid
+                    currentIndex = 0; // Reset to start from the first pet
+                    document.getElementById("pet-grid").innerHTML = ""; // Clear existing cards
+
+                    // Reload pets from the beginning
+                    loadPets();
+
+                    // Ensure the "Load More" button appears correctly
+                    if (petShelterData.length > petsPerPage) {
+                        loadMoreBtn.style.display = "block";
+                    } else {
+                        loadMoreBtn.style.display = "none";
+                    }
+                }
+            }
+
+            function openModal(petId) {
+                const pet = petShelterData.find(p => p.id === petId.toString());
+                if (pet) {
+                    document.getElementById("IDNum").textContent = `ID - ${pet.id}`;
+                    document.getElementById("Name").textContent = `Name - ${pet.name}`;
+                    document.getElementById("breed").textContent = `Breed - ${pet.breed}`;
+                    document.getElementById("age").textContent = `Age - ${pet.age} years`;
+                    document.getElementById("Neutered").textContent = `Neutered - ${pet.neutered ? "Yes" : "No"}`;
+                    document.getElementById("chipped").textContent = `Microchipped - ${pet.microchipped ? "Yes" : "No"}`;
+                    document.getElementById("chipID").textContent = `ChipID - ${pet.chipId || "N/A"}`;
+                    document.getElementById("health").textContent = `Health Status - ${pet.healthStatus}`;
+                    document.getElementById("vaccine").textContent = `Vaccinated - ${pet.vaccinated ? "Yes" : "No"}`;
+                    document.getElementById("fullImg").src = `imgs/${pet.name}Full.jpg`;
+                }
+            }
+
+            // Create Pet Modal HTML
+            document.body.insertAdjacentHTML('beforeend', `
+                <div class="modal fade" id="createPetModal" tabindex="-1" aria-labelledby="createPetModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createPetModalLabel">Create New Pet</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="createPetForm">
+                                    <input type="text" class="form-control mb-2" id="newPetName" placeholder="Pet Name" required>
+                                    <input type="text" class="form-control mb-2" id="newPetSpecies" placeholder="Species (Dog/Cat)" required>
+                                    <input type="text" class="form-control mb-2" id="newPetBreed" placeholder="Breed" required>
+                                    <input type="number" class="form-control mb-2" id="newPetAge" placeholder="Age" required>
+                                    <select class="form-control mb-2" id="newPetGender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <input type="checkbox" id="newPetNeutered"> Neutered
+                                    <input type="checkbox" id="newPetMicrochipped"> Microchipped
+                                    <input type="text" class="form-control mb-2" id="newPetChipId" placeholder="Chip ID (optional)">
+                                    <input type="text" class="form-control mb-2" id="newPetHealthStatus" placeholder="Health Status" required>
+                                    <input type="checkbox" id="newPetVaccinated"> Vaccinated
+                                    <button type="submit" class="btn btn-primary mt-2">Add Pet</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            // Handle Pet Creation
+            document.getElementById("createPetForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                // Get input values
+                const newPet = {
+                    id: (petShelterData.length + 1).toString().padStart(3, '0'),
+                    name: document.getElementById("newPetName").value,
+                    species: document.getElementById("newPetSpecies").value,
+                    breed: document.getElementById("newPetBreed").value,
+                    age: parseInt(document.getElementById("newPetAge").value),
+                    gender: document.getElementById("newPetGender").value,
+                    neutered: document.getElementById("newPetNeutered").checked,
+                    microchipped: document.getElementById("newPetMicrochipped").checked,
+                    chipId: document.getElementById("newPetChipId").value || null,
+                    healthStatus: document.getElementById("newPetHealthStatus").value,
+                    vaccinated: document.getElementById("newPetVaccinated").checked,
+                    summary: "A newly added pet looking for a home."
+                };
+
+                // Add to database array
+                petShelterData.push(newPet);
+
+                // Reset the form
+                document.getElementById("createPetForm").reset();
+
+                // Close modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById("createPetModal"));
+                modal.hide();
+
+                // Reload pets list
+                reloadPets();
+            });
+
+            function reloadPets() {
+                currentIndex = 0; // Reset index
+                document.getElementById("pet-grid").innerHTML = ""; // Clear grid
+                loadPets(); // Reload pets
+                loadMoreBtn.style.display = petShelterData.length > petsPerPage ? "block" : "none";
+            }
+            
+        </script>        
     </body>
 </html>

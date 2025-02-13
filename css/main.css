@@ -1,0 +1,107 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.pet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.pet-card {
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    background: white;
+}
+
+.pet-card:hover {
+    transform: translateY(-8px);
+}
+
+.pet-img {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.pet-img img {
+    width: 100%;
+    border-radius: 12px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.pet-card:hover .overlay {
+    opacity: 1;
+}
+
+.overlay p {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin: 15px 0 5px;
+    color: #222;
+}
+
+.adopt-btn {
+    background: #ff5722;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.adopt-btn:hover {
+    background: #e64a19;
+}
+
+#loadMoreBtnContainer {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
