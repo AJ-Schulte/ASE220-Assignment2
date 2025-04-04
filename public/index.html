@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/mdb.es.min.js"></script>
-        <script src="js/database.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
@@ -97,26 +96,37 @@
             initMDB({ Ripple });
         </script>
         <script>
-            let currentIndex = 0; // Ensure this is defined
+            let currentIndex = 0;
             const petsPerPage = 9;
             const petGrid = document.getElementById("pet-grid");
+            let petShelterData = [];
+            let loadMoreBtn;
+            const blobId = "20250404T193845839Z"; 
+            const apiUrl = `http://127.0.0.1:3000/api/jsonBlob/${blobId}`;
         
             document.addEventListener("DOMContentLoaded", () => {
-                loadPets();
-                const createPetBtn = document.createElement("button");
-                createPetBtn.textContent = "Create Pet";
-                createPetBtn.classList.add("btn", "btn-success", "mb-3");
-                createPetBtn.setAttribute("data-bs-toggle", "modal");
-                createPetBtn.setAttribute("data-bs-target", "#createPetModal");
-                document.querySelector(".section-subtitle").insertAdjacentHTML('afterend', `
-                    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#createPetModal">Create Pet</button>
-                `);
-                const loadMoreBtn = document.createElement("button");
-                loadMoreBtn.textContent = "Load More";
-                loadMoreBtn.id = "loadMoreBtn";
-                loadMoreBtn.classList.add("btn", "btn-primary", "load-more");
-                loadMoreBtn.addEventListener("click", loadPets);
-                document.querySelector("#loadMoreBtnContainer").appendChild(loadMoreBtn);
+                fetch(apiUrl).then(res => {
+                        if (!res.ok) throw new Error("Failed to load JSON blob");
+                        return res.json();
+                    }).then(data => {
+                        petShelterData = data;
+                        loadPets();
+        
+                        document.querySelector(".section-subtitle").insertAdjacentHTML('afterend', `
+                            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#createPetModal">Create Pet</button>
+                        `);
+        
+                        loadMoreBtn = document.createElement("button");
+                        loadMoreBtn.textContent = "Load More";
+                        loadMoreBtn.id = "loadMoreBtn";
+                        loadMoreBtn.classList.add("btn", "btn-primary", "load-more");
+                        loadMoreBtn.addEventListener("click", loadPets);
+                        document.querySelector("#loadMoreBtnContainer").appendChild(loadMoreBtn);
+                    })
+                    .catch(err => {
+                        console.error("Error loading pets:", err);
+                        petGrid.innerHTML = `<p class="text-danger">Failed to load pets. Please try again later.</p>`;
+                    });
             });
         
             function loadPets() {
@@ -124,7 +134,7 @@
         
                 petsToShow.forEach(pet => {
                     let petCard = document.createElement("div");
-                    petCard.classList.add("col-md-4", "mb-4"); // 3 per row in Bootstrap
+                    petCard.classList.add("col-md-4", "mb-4");
         
                     petCard.innerHTML = `
                         <div class="card shadow">
@@ -133,7 +143,7 @@
                                 <h5 class="card-title">${pet.name}</h5>
                                 <p class="card-text">${pet.age} years old • ${pet.breed}</p>
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="openModal('${pet.id}')">Details</button>
-                                <button class="btn btn-primary" onclick="deletePet('${pet.id}')">Delete</button>
+                                <button class="btn btn-danger" onclick="deletePet('${pet.id}')">Delete</button>
                             </div>
                         </div>
                     `;
@@ -146,29 +156,39 @@
                     document.getElementById("loadMoreBtn").style.display = "none";
                 }
             }
-
+        
+            function addPet(event) {
+                event.preventDefault();
+        
+                const newPet = {
+                    id: (petShelterData.length + 1).toString().padStart(3, '0'),
+                    name: document.getElementById("newPetName").value,
+                    species: document.getElementById("newPetSpecies").value,
+                    breed: document.getElementById("newPetBreed").value,
+                    age: parseInt(document.getElementById("newPetAge").value),
+                    gender: document.getElementById("newPetGender").value,
+                    neutered: document.getElementById("newPetNeutered").checked,
+                    microchipped: document.getElementById("newPetMicrochipped").checked,
+                    chipId: document.getElementById("newPetChipId").value || null,
+                    healthStatus: document.getElementById("newPetHealthStatus").value,
+                    vaccinated: document.getElementById("newPetVaccinated").checked,
+                    summary: "A newly added pet looking for a home."
+                };
+        
+                petShelterData.push(newPet);
+                updatePetsOnServer();
+        
+                document.getElementById("createPetForm").reset();
+                let modal = bootstrap.Modal.getInstance(document.getElementById("createPetModal"));
+                modal.hide();
+        
+                reloadPets();
+            }
+        
             function deletePet(petId) {
-                // Find the pet index in the data array
-                const petIndex = petShelterData.findIndex(p => p.id === petId.toString());
-
-                if (petIndex !== -1) {
-                    // Remove the pet from the array
-                    petShelterData.splice(petIndex, 1);
-
-                    // Reset index and clear the pet grid
-                    currentIndex = 0; // Reset to start from the first pet
-                    document.getElementById("pet-grid").innerHTML = ""; // Clear existing cards
-
-                    // Reload pets from the beginning
-                    loadPets();
-
-                    // Ensure the "Load More" button appears correctly
-                    if (petShelterData.length > petsPerPage) {
-                        loadMoreBtn.style.display = "block";
-                    } else {
-                        loadMoreBtn.style.display = "none";
-                    }
-                }
+                petShelterData = petShelterData.filter(p => p.id !== petId);
+                updatePetsOnServer();
+                reloadPets();
             }
 
             function openModal(petId) {
@@ -186,7 +206,7 @@
                     document.getElementById("fullImg").src = `imgs/${pet.name}Full.jpg`;
                 }
             }
-
+        
             // Create Pet Modal HTML
             document.body.insertAdjacentHTML('beforeend', `
                 <div class="modal fade" id="createPetModal" tabindex="-1" aria-labelledby="createPetModalLabel" aria-hidden="true">
@@ -218,48 +238,30 @@
                     </div>
                 </div>
             `);
-
-            // Handle Pet Creation
-            document.getElementById("createPetForm").addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                // Get input values
-                const newPet = {
-                    id: (petShelterData.length + 1).toString().padStart(3, '0'),
-                    name: document.getElementById("newPetName").value,
-                    species: document.getElementById("newPetSpecies").value,
-                    breed: document.getElementById("newPetBreed").value,
-                    age: parseInt(document.getElementById("newPetAge").value),
-                    gender: document.getElementById("newPetGender").value,
-                    neutered: document.getElementById("newPetNeutered").checked,
-                    microchipped: document.getElementById("newPetMicrochipped").checked,
-                    chipId: document.getElementById("newPetChipId").value || null,
-                    healthStatus: document.getElementById("newPetHealthStatus").value,
-                    vaccinated: document.getElementById("newPetVaccinated").checked,
-                    summary: "A newly added pet looking for a home."
-                };
-
-                // Add to database array
-                petShelterData.push(newPet);
-
-                // Reset the form
-                document.getElementById("createPetForm").reset();
-
-                // Close modal
-                var modal = bootstrap.Modal.getInstance(document.getElementById("createPetModal"));
-                modal.hide();
-
-                // Reload pets list
-                reloadPets();
-            });
-
+        
+            function updatePetsOnServer() {
+                fetch(apiUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(petShelterData)
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error("Failed to update pets on server");
+                    console.log("Successfully updated pet data on server");
+                })
+                .catch(err => console.error("Error updating pets:", err));
+            }
+        
             function reloadPets() {
-                currentIndex = 0; // Reset index
-                document.getElementById("pet-grid").innerHTML = ""; // Clear grid
-                loadPets(); // Reload pets
+                currentIndex = 0;
+                petGrid.innerHTML = "";
+                loadPets();
                 loadMoreBtn.style.display = petShelterData.length > petsPerPage ? "block" : "none";
             }
-            
+        
+            document.getElementById("createPetForm").addEventListener("submit", addPet);
         </script>        
     </body>
 </html>
